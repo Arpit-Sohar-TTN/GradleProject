@@ -1,0 +1,68 @@
+version '1.0-SNAPSHOT'
+
+apply plugin: 'java'
+apply from: 'myTask.gradle'
+//https://rominirani.com/gradle-tutorial-part-2-java-projects-5aaf99368018#.gmo3t2lo0
+sourceCompatibility = 1.5
+
+repositories {
+    /*mavenLocal()
+    mavenCentral()*/
+    maven {
+        url 'http://jcenter.bintray.com'
+    }
+}
+
+dependencies {
+    testCompile group: 'junit', name: 'junit', version: '4.11'
+}
+/*
+jar {
+    exclude('file.txt')
+}*/
+
+task hello(dependsOn : Demo) {
+    doLast {
+        println "Hello World";
+
+    }
+}
+println sourceSets.main.output.classesDir
+println sourceSets['main'].output.classesDir
+sourceSets {
+    println main.output.classesDir
+}
+sourceSets {
+    main {
+        println output.classesDir
+    }
+}
+
+// Iterate over the source sets
+sourceSets.all {
+    println name
+}
+sourceSets {
+    main {
+        java {
+            srcDirs = ['src/main/java','src/main/java2']
+
+        }
+
+        resources {
+            srcDirs = ['src/resources']
+        }
+    }
+}
+/*
+sourceSets {
+    // Note that just declaring this sourceset creates two configurations.
+    main {
+        java {
+            srcDirs = ['src/main/java']
+            srcDirs = ['src/main/java2']
+
+        }
+    }
+}*/
+
